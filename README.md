@@ -6,20 +6,20 @@ The app allows NFC tags to be scanned directly into systems such as:
 
 - ODK Collect
 - KoboCollect
-- KoboToolbox
+- Ona
+- CommCare
+- SurveyCTO
+  
 - Other Android intent-compatible platforms
 
-TagBridge is designed for low-resource, offline, and operational environments including:
 
-- Clinical research
-- Epidemiology
-- Laboratory workflows
-- Asset tracking
-- Sample management
-- Participant identification
-- Field surveys
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/2689e776-ee57-42ea-bf83-152787a617a5" width="23%" />
+  <img src="https://github.com/user-attachments/assets/ba4ca234-15a6-41b8-9a21-0e85d6da215c" width="23%" />
+  <img src="https://github.com/user-attachments/assets/20129c88-09ac-4e3d-949e-8f515e59219e" width="23%" />
+  <img src="https://github.com/user-attachments/assets/1c29f951-b773-41a2-b80c-075b539377d8" width="23%" />
+</p>
 
----
 
 # Features
 
@@ -32,6 +32,9 @@ TagBridge is designed for low-resource, offline, and operational environments in
 - Flexible field extraction
 - Lightweight and minimal interface
 - No cloud dependency
+- Manual Write to NFC tags
+
+TagBridge is designed for low-resource, offline, and operational environments including Clinical research, Epidemiology, Laboratory workflows, Asset tracking, Sample management, Participant identification, Field surveys
 
 ---
 
@@ -180,14 +183,6 @@ TagBridge currently supports reading:
 
 Some secure devices such as passports and payment cards may expose randomised identifiers rather than stable IDs. This is expected behaviour and is designed to prevent passive tracking.
 
----
-
-# Screenshots
-
-<img width="230" height="512" alt="TagBridge_Inspection" src="https://github.com/user-attachments/assets/2689e776-ee57-42ea-bf83-152787a617a5" />
-<img width="230" height="512" alt="TagBridge_Inspection2" src="https://github.com/user-attachments/assets/ba4ca234-15a6-41b8-9a21-0e85d6da215c" />
-<img width="230" height="512" alt="XLSForm_ScanTrigger" src="https://github.com/user-attachments/assets/20129c88-09ac-4e3d-949e-8f515e59219e" />
-<img width="230" height="512" alt="XLSForm_ScanReturn" src="https://github.com/user-attachments/assets/1c29f951-b773-41a2-b80c-075b539377d8" />
 
 ---
 
@@ -205,7 +200,7 @@ This project should therefore be understood as an example of collaborative human
 
 Planned future development includes:
 
-- NFC writing support
+- Full NFC writing support
 - Continuous scan mode
 - Duplicate suppression
 - Inventory workflows
