@@ -73,7 +73,7 @@ When the question is opened:
 
 ## Single Value
 
-Returns a single selected field.
+Returns a single selected field - Use the appearance column
 
 Example:
 
@@ -93,7 +93,7 @@ Example:
 ex:uk.ac.lshtm.tagbridge.SCAN_NFC(return_fields='tag_id_hex,tag_id_dec,tech_list', format='json')
 ```
 
-Example returned value:
+Example returned value  - Use the appearance column
 
 ```json
 {
@@ -102,19 +102,6 @@ Example returned value:
   "tech_list": "NfcA,MifareUltralight"
 }
 ```
-
----
-
-## Key-Value Return
-
-Returns semicolon-delimited key-value pairs.
-
-Example:
-
-```text
-ex:uk.ac.lshtm.tagbridge.SCAN_NFC(return_fields='tag_id_hex,tag_id_dec,tech_list', format='kv')
-```
-
 ---
 
 # Field-List Group Integration
@@ -171,7 +158,7 @@ Inspection mode allows the user to:
 - View NDEF records
 - Explore payload structures
 - Select fields interactively
-- Generate XLSForm-compatible intent strings
+- Generate XLSForm-compatible intent strings to copy-paste into XLS Form.
 - Copy generated intents to clipboard
 
 This is useful for rapid development and debugging.
@@ -197,7 +184,10 @@ Some secure devices such as passports and payment cards may expose randomised id
 
 # Screenshots
 
-_Add screenshots here._
+<img width="230" height="512" alt="TagBridge_Inspection" src="https://github.com/user-attachments/assets/2689e776-ee57-42ea-bf83-152787a617a5" />
+<img width="230" height="512" alt="TagBridge_Inspection2" src="https://github.com/user-attachments/assets/ba4ca234-15a6-41b8-9a21-0e85d6da215c" />
+<img width="230" height="512" alt="XLSForm_ScanTrigger" src="https://github.com/user-attachments/assets/20129c88-09ac-4e3d-949e-8f515e59219e" />
+<img width="230" height="512" alt="XLSForm_ScanReturn" src="https://github.com/user-attachments/assets/1c29f951-b773-41a2-b80c-075b539377d8" />
 
 ---
 
