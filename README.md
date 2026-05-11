@@ -1,87 +1,99 @@
-# ODK NFC Connector
+# TagBridge
 
-A lightweight Android NFC utility designed for integration with the ODK ecosystem.
+TagBridge is an offline-first Android NFC utility for mobile field data collection workflows.
 
-This application allows ODK Collect forms to:
+The app allows NFC tags to be scanned directly into systems such as:
 
-- Read NFC tags
-- Extract tag metadata and payloads
-- Return values directly into XLSForms using Android intents
-- Inspect arbitrary NFC tags interactively
-- Generate reusable ODK intent strings
-- Support multiple NFC technologies and payload formats
-- Operate entirely offline
+- ODK Collect
+- KoboCollect
+- KoboToolbox
+- Other Android intent-compatible platforms
 
-The application was designed primarily for:
+TagBridge is designed for low-resource, offline, and operational environments including:
 
 - Clinical research
-- Field epidemiology
-- Asset tracking
-- Participant identification
+- Epidemiology
 - Laboratory workflows
-- Inventory systems
-- Low-resource and offline environments
+- Asset tracking
+- Sample management
+- Participant identification
+- Field surveys
 
 ---
 
 # Features
 
-## NFC Reading
-
-The app currently supports reading:
-
-- NDEF tags
-- NTAG tags
-- MIFARE Ultralight
-- ISO-DEP devices
-- NFC-A
-- NFC-B
-- NFC-F
-- NFC-V
-- Barcode-compatible NFC interfaces
-
-The app automatically detects available technologies and extracts available metadata.
+- Offline NFC scanning
+- Android intent integration
+- Support for multiple NFC technologies
+- JSON and key-value return formats
+- NFC inspection mode
+- Intent generator for XLSForms
+- Flexible field extraction
+- Lightweight and minimal interface
+- No cloud dependency
 
 ---
 
-# ODK Integration
+# Installation
 
-The application can be launched directly from ODK Collect using Android external app intents.
+## Android Sideload Installation
 
-The connector supports both:
+TagBridge is currently distributed as an APK file.
 
-- Single-question return workflows
-- Multi-field field-list workflows
+1. Download the latest APK from the GitHub Releases page.
+2. Transfer the APK to your Android device if necessary.
+3. Open the APK on the device.
+4. Allow installation from unknown sources if prompted.
+5. Install the application.
+
+Depending on the Android version and manufacturer, the wording of the security prompts may differ slightly.
 
 ---
 
-# Single Question Mode
+# Basic Usage
 
-Use the `appearance` column with the `ex:` prefix.
+## Scan NFC Into ODK / Kobo
+
+In an XLSForm:
+
+```text
+ex:uk.ac.lshtm.tagbridge.SCAN_NFC
+```
+
+When the question is opened:
+
+1. TagBridge launches
+2. The user scans an NFC tag
+3. The value is returned automatically into the form
+
+---
+
+# Return Formats
+
+## Single Value
+
+Returns a single selected field.
 
 Example:
 
 ```text
-ex:uk.ac.lshtm.odknfcconnector.SCAN_NFC
-```
-
-Example XLSForm:
-
-```csv
-type,name,label,appearance
-text,nfc_tag,Scan NFC,ex:uk.ac.lshtm.odknfcconnector.SCAN_NFC
+ex:uk.ac.lshtm.tagbridge.SCAN_NFC(value_field='tag_id_hex', format='single')
 ```
 
 ---
 
-# JSON Return Example
+## JSON Return
 
-```csv
-type,name,label,appearance
-text,nfc_json,Scan NFC,"ex:uk.ac.lshtm.odknfcconnector.SCAN_NFC(return_fields='tag_id_hex,tag_id_dec,tech_list', format='json')"
+Returns structured JSON.
+
+Example:
+
+```text
+ex:uk.ac.lshtm.tagbridge.SCAN_NFC(return_fields='tag_id_hex,tag_id_dec,tech_list', format='json')
 ```
 
-Returned value:
+Example returned value:
 
 ```json
 {
@@ -93,40 +105,37 @@ Returned value:
 
 ---
 
-# Field-List Group Mode
+## Key-Value Return
 
-Use:
+Returns semicolon-delimited key-value pairs.
 
-- `appearance = field-list`
-- `body::intent = uk.ac.lshtm.odknfcconnector.SCAN_NFC`
+Example:
 
-Important:
+```text
+ex:uk.ac.lshtm.tagbridge.SCAN_NFC(return_fields='tag_id_hex,tag_id_dec,tech_list', format='kv')
+```
 
-- `body::intent` does NOT use the `ex:` prefix
-- `field-list` and `ex:` cannot reliably coexist in the same appearance field
+---
+
+# Field-List Group Integration
+
+TagBridge also supports ODK field-list workflows using `body::intent` or `bind::intent`.
 
 Example:
 
 ```csv
 type,name,label,appearance,body::intent
-begin_group,nfc_group,NFC Data,field-list,"uk.ac.lshtm.odknfcconnector.SCAN_NFC(return_fields='tag_id_hex,tag_id_dec,tech_list')"
+begin_group,nfc_group,NFC Data,field-list,"uk.ac.lshtm.tagbridge.SCAN_NFC(return_fields='tag_id_hex,tag_id_dec,tech_list')"
 text,tag_id_hex,Tag ID Hex,,
 text,tag_id_dec,Tag ID Decimal,,
 text,tech_list,Tech List,,
 end_group,,,,
 ```
 
----
+Important:
 
-# Flexible Return Formats
-
-The connector currently supports:
-
-| Format | Behaviour |
-|---|---|
-| single | Returns one selected value |
-| kv | Returns semicolon-delimited key-value pairs |
-| json | Returns a JSON object |
+- `appearance` uses `ex:`
+- `body::intent` and `bind::intent` do not use `ex:`
 
 ---
 
@@ -153,90 +162,77 @@ The connector currently supports:
 
 # Inspection Mode
 
-When launched normally rather than from ODK, the application enters inspection mode.
+When TagBridge is opened normally rather than from ODK/Kobo, it enters inspection mode.
 
 Inspection mode allows the user to:
 
 - Scan arbitrary NFC tags
-- View raw tag metadata
+- View raw NFC metadata
 - View NDEF records
-- View payload structures
-- Select desired fields
-- Generate ODK-compatible intent strings
+- Explore payload structures
+- Select fields interactively
+- Generate XLSForm-compatible intent strings
 - Copy generated intents to clipboard
 
-This is useful for exploratory development and rapid form design.
+This is useful for rapid development and debugging.
 
 ---
 
-# NFC Behaviour Notes
+# NFC Compatibility
 
-## Stable IDs
+TagBridge currently supports reading:
 
-Simple NFC tags such as NTAG and MIFARE Ultralight generally expose stable identifiers.
+- NDEF tags
+- NTAG tags
+- MIFARE Ultralight
+- ISO-DEP devices
+- NFC-A
+- NFC-B
+- NFC-F
+- NFC-V
 
-These are appropriate for:
-
-- Asset tracking
-- Participant tokens
-- Equipment identifiers
-- Sample labels
+Some secure devices such as passports and payment cards may expose randomised identifiers rather than stable IDs. This is expected behaviour and is designed to prevent passive tracking.
 
 ---
 
-## Randomised IDs
+# Screenshots
 
-Secure devices such as:
+_Add screenshots here._
 
-- Passports
-- Payment cards
-- Some DESFire cards
+---
 
-may expose randomised identifiers that change between scans.
+# Development Notes
 
-This is expected behaviour and is designed to prevent passive tracking.
+This project was developed through a hybrid workflow combining human-directed design and extensive use of AI-assisted coding tools.
 
-Applications requiring stable identity should therefore rely on controlled NDEF payloads rather than physical tag IDs alone.
+The overall architecture, workflow design, NFC/ODK integration concepts, testing process, and operational requirements were directed by Chrissy Roberts. Large portions of implementation code, debugging support, refactoring, and documentation were generated iteratively using large language models and then tested, modified, and integrated into the final application.
+
+This project should therefore be understood as an example of collaborative human-AI software development rather than purely manual software engineering.
 
 ---
 
 # Planned Features
 
-## Writing Support
+Planned future development includes:
 
-Planned NFC writing modes include:
-
-- Text payloads
-- URI payloads
-- JSON payloads
-- Structured participant records
-- Asset metadata
+- NFC writing support
+- Continuous scan mode
+- Duplicate suppression
+- Inventory workflows
 - Signed payloads
 - Optional write-once locking
-- Verify-after-write workflows
+- Structured participant records
+- Asset registration workflows
 
 ---
 
-## Continuous Scan Mode
-
-Planned support for:
-
-- Rapid inventory workflows
-- Duplicate suppression
-- Scan history
-- Batch logging
-- Offline asset auditing
-
----
-
-# Building
+# Building From Source
 
 ## Requirements
 
 - Android SDK 35+
 - Java 17
 - Gradle 8.9+
-- Android Studio recommended
 
 ---
 
@@ -249,51 +245,8 @@ Planned support for:
 APK output:
 
 ```text
-app/build/outputs/apk/debug/app-debug.apk
+app/build/outputs/apk/debug/
 ```
-
----
-
-# Installation
-
-Install via ADB:
-
-```bash
-adb install -r app/build/outputs/apk/debug/app-debug.apk
-```
-
-Or copy the APK directly to the Android device and install manually.
-
----
-
-# Current Architecture
-
-The application uses Android NFC Reader Mode rather than foreground dispatch.
-
-Reader Mode proved substantially more reliable across modern Android devices when interacting with ODK Collect.
-
----
-
-# Design Principles
-
-This project prioritises:
-
-- Offline operation
-- Transparency
-- Open workflows
-- Interoperability
-- Minimal dependencies
-- Low-resource compatibility
-- Field robustness
-- Simple deployment
-
----
-
-# Disclaimer
-
-This application is experimental research software.
-
-Validation is strongly recommended before use in regulated environments.
 
 ---
 

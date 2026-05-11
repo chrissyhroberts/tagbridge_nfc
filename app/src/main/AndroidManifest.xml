@@ -15,7 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="uk.ac.lshtm.odknfcconnector.SCAN_NFC" />
+                <action android:name="uk.ac.lshtm.tagbridge.SCAN_NFC" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
