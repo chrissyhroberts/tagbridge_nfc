@@ -1,0 +1,44 @@
+
+# Gradle
+.gradle/
+
+# Local config
+local.properties
+
+# Build outputs
+build/
+app/build/
+
+# Android Studio
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# Keystore files
+*.jks
+*.keystore
+
+# Logs
+*.log
+
+# Kotlin
+.kotlin/
+
+# Generated captures
+captures/
+
+# External native build
+.externalNativeBuild/
+.cxx/
+
+# Android signing
+signing.properties
+
+# Excel lockfiles
+~$*
+
+# local properties
+
+local.properties

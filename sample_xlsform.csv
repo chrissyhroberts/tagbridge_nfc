@@ -1,0 +1,11 @@
+type,name,label,appearance,body::intent
+text,nfc_uid,Scan NFC asset tag,ex:uk.ac.lshtm.odknfcconnector.SCAN_NFC,
+text,nfc_uid_configured,Scan NFC asset tag configured,"ex:uk.ac.lshtm.odknfcconnector.SCAN_NFC(value_field='tag_id_hex')",
+text,nfc_json,Scan NFC JSON,"ex:uk.ac.lshtm.odknfcconnector.SCAN_NFC(return_fields='tag_id_hex,tech_list,ndef_text,ndef_uri',format='json')",
+begin_group,nfc_group,NFC tag details,field-list,"uk.ac.lshtm.odknfcconnector.SCAN_NFC(return_fields='tag_id_hex,ndef_text,ndef_uri,tech_list,summary')"
+text,tag_id_hex,Tag UID,,
+text,ndef_text,NDEF text,,
+text,ndef_uri,NDEF URI,,
+text,tech_list,NFC technologies,,
+text,summary,Summary,,
+end_group,,,,
